@@ -234,9 +234,10 @@ class EsApiApplicationTests {
         //上海市
         GeoPoint geoPoint = new GeoPoint(31.19115507754109,121.4079235932617);
         //geo距离查询  name=geo字段
-        QueryBuilder qb = QueryBuilders.geoDistanceQuery("location")
+        QueryBuilder qb = QueryBuilders
+                .geoDistanceQuery("location")
                 //距离 9KM
-                .distance(1d, DistanceUnit.KILOMETERS)
+                .distance(5d, DistanceUnit.KILOMETERS)
                 //上海市
                 .point(geoPoint);
         GeoDistanceSortBuilder sortBuilder = SortBuilders
