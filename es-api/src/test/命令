@@ -1,0 +1,115 @@
+GET _analyze
+{
+  "analyzer": "ik_smart",
+  "text":"中国共产党"
+}
+GET _analyze
+{
+  "analyzer": "ik_max_word",
+  "text":"中国共产党"
+}
+
+PUT /test/type/1
+{
+  "name": "柏UI新",
+  "age": 666
+}
+PUT /test2
+{
+  "mappings": {
+    "properties": {
+      "name": {
+        "type": "text"
+      },
+      "age": {
+        "type": "long"
+      },
+      "birthday":{
+        "type": "date"
+      }
+    }
+  }
+}
+
+PUT /my_geo
+{
+    "settings":{
+        "analysis":{
+            "analyzer":{
+                "default":{
+                    "type":"ik_max_word"
+                }
+            }
+        }
+    },
+    "mappings":{
+        "dynamic_date_formats":[
+            "MM/dd/yyyy",
+            "yyyy/MM/dd HH:mm:ss",
+            "yyyy-MM-dd",
+            "yyyy-MM-dd HH:mm:ss"
+        ],
+        "properties":{
+            "location":{
+                "type":"geo_point"
+            }
+        }
+    }
+}
+
+
+POST /my_geo/_doc
+{
+    "name":"路人甲",
+    "location":{
+        "lat": 39.90279998006104,
+        "lon": 116.42703999493406
+    }
+}
+
+POST /my_geo/_doc
+{
+  "location":{
+    "lat":39.93367997774064,
+    "lon":116.47788257733151
+  },
+  "name":"谷慧1柔"
+}
+
+
+POST /my_geo/_doc
+{
+    "name":"路人乙",
+    "location":{
+        "lat": 39.93367367974064,
+        "lon": 116.47845257733152
+    }
+}
+
+POST /my_geo/_doc
+{
+  "location":{
+    "lat":39.93367367774064,
+    "lon":116.47775257733151
+  },
+  "name":"柏1宇鑫"
+
+}
+
+
+POST /my_geo/_search
+{
+    "query":{
+        "bool":{
+            "filter":{
+                "geo_distance":{
+                    "distance":"5km",
+                    "location":{
+                        "lat":39.93031708627304,
+                        "lon":116.4470385453491
+                    }
+                }
+            }
+        }
+    }
+}
